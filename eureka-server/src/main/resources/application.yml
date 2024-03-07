@@ -1,0 +1,18 @@
+server:
+  port: 5090
+
+spring:
+  application:
+    name: eureka-server-service
+#  config:
+#   import: optional:configserver:http://localhost:8071
+eureka:
+  instance:
+    hostname: eureka-discovery-server 
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+  client:
+    fetch-registry: false #Eureka clients fetches the registry information from the server and caches it locally. After that, the clients use that information to find other services.
+    register-with-eureka: false   # if a single instance of eureka server is running so no need to sync this eureka with no one
+    service-url:
+      defaultZone: http://localhost:5090/eureka

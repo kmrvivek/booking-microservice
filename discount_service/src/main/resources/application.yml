@@ -1,0 +1,28 @@
+
+spring:
+  application:
+    name: discount-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/discount
+    username: root
+    password: mysql@123
+    
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5090/eureka #Eureka Server location
+      
+discount:
+  rules:
+    - category: BookingTime
+      dayTime: Afternoon
+      discountPercentage: 20.0
+    - category: BookingDay
+      dayOfWeek: 3
+      discountPercentage: 10.0
+    - category: Any
+      bookingCountThreshold: 3
+      bookingThresholdDiscountPercentage: 50.0

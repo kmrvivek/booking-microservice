@@ -1,0 +1,56 @@
+server:
+  port: 8083  # set port to 0 to make the spring boot to dynamically allocate the port number for you
+  
+spring:
+  application:
+    name: user-service
+  config:
+   import: optional:configserver:http://localhost:8071
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/user_service
+    username: root
+    password: mysql@123
+  jpa:
+    show_sql: true
+    generate-ddl: true
+    hibernate:
+        ddl-auto: update #For production, this property should be validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      time-to-live: 60000
+#Config Server location
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+        
+logging: 
+   level:
+     com:
+       ms: 
+         user: DEBUG 
+     org:
+       springframework: ERROR
+       hibernate: ERROR
+       
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}  # if we are generating the port number dynamically
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5090/eureka #Eureka Server location
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
