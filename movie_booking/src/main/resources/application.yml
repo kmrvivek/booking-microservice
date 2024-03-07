@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/movie_booking
+    username: root
+    password: mysql@123
+  jpa:
+    show_sql: true
+    generate-ddl: true
+    hibernate:
+        ddl-auto: update #For production, this property should be validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}  # if we are generating the port number dynamically
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5090/eureka #Eureka Server location
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+logging:
+  level:
+    root: info
+server:
+  port: 8080
